@@ -8,4 +8,8 @@ RUN curl -o /etc/bash_completion.d/docker-machine.bash https://raw.githubusercon
 
 WORKDIR /root
 
+ADD ./root /root
+
+VOLUME /root
+
 ENTRYPOINT ["/bin/bash"]
