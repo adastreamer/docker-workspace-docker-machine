@@ -1,0 +1,8 @@
+{
+    "volumes": [
+        {
+            "src": "root",
+            "dest": "/root"
+        }
+    ]
+}
