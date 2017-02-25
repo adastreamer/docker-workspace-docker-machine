@@ -98,5 +98,9 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-PS1='[\u@\h \W$(__docker_machine_ps1)]\$ '
+export PS1='[\u@\h \W$(__docker_machine_ps1)]\$ '
+
+# a few locale rules
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
 
