@@ -12,12 +12,13 @@ RUN curl -L https://github.com/sourcelair/xterm.js/archive/2.3.2.tar.gz | tar xv
 RUN ln -s /usr/local/share/xterm.js-2.3.2 /usr/local/share/xterm.js
 RUN cd /usr/local/share/xterm.js && npm install && npm run build
 
-ADD ./root /root
+ADD ./root /root_init
 ADD ./xterm.js /usr/local/share/xterm.js/app
+ADD ./run.sh /
 
 VOLUME /root
 
 WORKDIR /root
 
-CMD ["node", "/usr/local/share/xterm.js/app/app"]
+CMD ["/run.sh"]
 

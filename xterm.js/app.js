@@ -7,28 +7,22 @@ var pty = require('node-pty');
 var terminals = {},
     logs = {};
 
-app.use('/build', express.static(__dirname + '/../build'));
+app.use(express.static(__dirname));
+app.use(express.static(__dirname + '/../build'));
+app.use(express.static(__dirname + '/../node_modules/xterm/dist'));
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
-app.get('/style.css', function(req, res){
-  res.sendFile(__dirname + '/style.css');
-});
-
-app.get('/main.js', function(req, res){
-  res.sendFile(__dirname + '/main.js');
-});
-
 app.post('/terminals', function (req, res) {
   var cols = parseInt(req.query.cols),
       rows = parseInt(req.query.rows),
-      term = pty.spawn(process.platform === 'win32' ? 'cmd.exe' : 'bash', [], {
+      term = pty.spawn('bash', [], {
         name: 'xterm-color',
         cols: cols || 80,
         rows: rows || 24,
-        cwd: '/root'
+        cwd: '/'
       });
 
   console.log('Created terminal with PID: ' + term.pid);
@@ -77,8 +71,12 @@ app.ws('/terminals/:pid', function (ws, req) {
 });
 
 var port = process.env.PORT || 3000,
-    host = os.platform() === 'win32' ? '127.0.0.1' : '0.0.0.0';
+    host = '0.0.0.0';
 
 console.log('App listening to http://' + host + ':' + port);
 app.listen(port, host);
+
+process.on('SIGINT', function() {
+    process.exit();
+});
 

@@ -1,0 +1,2 @@
+keep this file in the volume dir to prevent the seeding of the init files
+or remove this file to tell the init script to initialize this directory
